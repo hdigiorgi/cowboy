@@ -880,10 +880,7 @@ push(Path, Headers, #{pid := Pid, streamid := StreamID,
 -spec response_headers(Headers, req()) -> Headers when Headers::cowboy:http_headers().
 response_headers(Headers0, Req) ->
 	RespHeaders = maps:get(resp_headers, Req, #{}),
-	Headers = maps:merge(#{
-		<<"date">> => cowboy_clock:rfc1123(),
-		<<"server">> => <<"Cowboy">>
-	}, maps:merge(RespHeaders, Headers0)),
+	Headers = maps:merge(RespHeaders, Headers0),
 	%% The set-cookie header is special; we can only send one cookie per header.
 	%% We send the list of values for many cookies in one key of the map,
 	%% and let the protocols deal with it directly.
